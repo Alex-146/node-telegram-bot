@@ -10,7 +10,12 @@ async function getRates(value) {
   };
 
   const response = await axios.post("https://smartwm.biz/exchange/rate", postForm);
-  const { form } = response.data;
+  const { error, form } = response.data;
+
+  if (error) {
+    return response.data.message ?? "Request error";
+  }
+
   const { systemFromTitle, amountFrom, currFrom,
     systemToTitle, amountTo, currTo, 
     actualRate, rateFrom } = form;
